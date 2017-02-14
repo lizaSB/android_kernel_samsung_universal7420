@@ -23,3 +23,21 @@ debug.atrace.tags.enableflags=0
 ro.bootimage.build.date=Wed Nov 23 15:08:04 KST 2016
 ro.bootimage.build.date.utc=1479881284
 ro.bootimage.build.fingerprint=samsung/zeroltebmc/zeroltebmc:6.0.1/MMB29K/G925W8VLU5CPK4:user/test-keys
+
+#Disable Securities
+ro.config.tima=0
+ro.config.timaversion=0
+ro.securestorage.support=false
+ro.config.knox=0
+ro.securestorage.knox=false
+ro.security.mdpp.ux=Disabled
+ro.config.dmverity=false
+ro.config.rkp=false
+ro.config.kap_default_on=false
+ro.config.kap=false
+androidboot.selinux=0
+security.knox_kap_mode=false
+ro.kernel.android.checkjni=0
+ro.kernel.checkjni=0
+ro.config.nocheckin=1
+wlan.wfd.hdcp=disable
