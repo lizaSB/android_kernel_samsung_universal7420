@@ -32,7 +32,7 @@ echo
 if [ ! -f $KERNELDIR/.config ]; then
     echo
     echo "${bldcya}***** Writing Config *****${txtrst}";
-    cp $KERNELDIR/arch/arm64/configs/$KERNEL_CONFIG .config;
+    cp $KERNELDIR/arch/arm64/configs/$VARIANT/$KERNEL_CONFIG .config;
     make ARCH=arm64 $KERNEL_CONFIG;
 fi;
 

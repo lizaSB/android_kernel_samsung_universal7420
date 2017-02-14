@@ -78,11 +78,13 @@ fi;
 # G920T
 if [ "$TARGET" = "G920W8" ] ; then
     export KERNEL_CONFIG="exynos7420-zerofltebmc_defconfig";
+    export VARIANT="zerof"
 fi;
 
 # G925T
 if [ "$TARGET" = "G925W8" ] ; then
     export KERNEL_CONFIG="exynos7420-zeroltebmc_defconfig";
+    export VARIANT="zero"
 fi;
 
 # build script
