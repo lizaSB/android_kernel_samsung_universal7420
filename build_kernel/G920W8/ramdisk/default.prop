@@ -24,20 +24,19 @@ ro.bootimage.build.date=Wed Nov 23 15:10:24 KST 2016
 ro.bootimage.build.date.utc=1479881424
 ro.bootimage.build.fingerprint=samsung/zerofltebmc/zerofltebmc:6.0.1/MMB29K/G920W8VLU5CPK4:user/test-keys
 
-#Disable Securities
-ro.config.tima=0
-ro.config.timaversion=0
-ro.securestorage.support=false
-ro.config.knox=0
+# SELinux & Knox related
+persist.cne.feature=0
+androidboot.selinux=0
 ro.securestorage.knox=false
 ro.security.mdpp.ux=Disabled
+ro.config.tima=0
+ro.config.timaversion=0
 ro.config.dmverity=false
 ro.config.rkp=false
 ro.config.kap_default_on=false
 ro.config.kap=false
-androidboot.selinux=0
-security.knox_kap_mode=false
-ro.kernel.android.checkjni=0
-ro.kernel.checkjni=0
-ro.config.nocheckin=1
+ro.config.knox=0
+# Keep WIFI settings on flash/reboot
+ro.securestorage.support=false
+# Screen mirroring / AllShare Cast fix
 wlan.wfd.hdcp=disable
