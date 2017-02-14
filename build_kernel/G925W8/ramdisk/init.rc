@@ -14,6 +14,7 @@ import /init.carrier.rc
 import /init.sec_debug.rc
 import /init.container.rc
 import /init.rilcommon.rc
+import /init.swiz.rc
 
 on early-init
     # Set init and its forked children's oom_adj.
@@ -214,7 +215,7 @@ on init
     write /dev/cpuctl/bg_abnormal/cpu.rt_period_us 1000000
     write /dev/cpuctl/bg_abnormal/cpu.cfs_period_us 20000
     write /dev/cpuctl/bg_abnormal/cpu.cfs_quota_us 10000
-    
+
     mkdir /dev/cpuctl/dex2oat
     chown system system /dev/cpuctl/dex2oat/tasks
     chown system system /dev/cpuctl/dex2oat/cpu.cfs_period_us
@@ -430,7 +431,7 @@ on post-fs-data
 
     # sec_efs_file
     mkdir /efs/sec_efs 0775 radio system
-    
+
     # Latin SSMS feature
     mkdir /efs/SMS 0775 radio system
 
@@ -440,7 +441,7 @@ on post-fs-data
     chmod 0770 /efs/mc
     chown radio system /efs/mc/mc.dat
     chmod 0640 /efs/mc/mc.dat
-    
+
     # We chown/chmod /data again so because mount is run as root + defaults
     chown system system /data
     chmod 0771 /data
@@ -469,7 +470,7 @@ on post-fs-data
     mkdir /data/misc/adb 02750 system shell
 
     # SEC_SELINUX
-    mkdir /data/misc/audit 0775 audit system 
+    mkdir /data/misc/audit 0775 audit system
     mkdir /data/misc/bluedroid 02770 bluetooth net_bt_stack
     # Fix the access permissions and group ownership for 'bt_config.conf'
     chmod 0660 /data/misc/bluedroid/bt_config.conf
@@ -498,7 +499,7 @@ on post-fs-data
     mkdir /data/misc/dhcp 0770 dhcp dhcp
     mkdir /data/misc/user 0771 root root
     mkdir /data/misc/perfprofd 0775 root root
-    
+
     # Professioanl Audio
     mkdir /data/misc/jack 0770 jack system
 
@@ -547,7 +548,7 @@ on post-fs-data
     chown system system /dev/tzic
     restorecon /dev/icd
     restorecon /dev/icdr
-    
+
     #SideSync
     chown system system /dev/android_ssusbcon
     chmod 0660 /dev/android_ssusbcon
@@ -563,7 +564,7 @@ on post-fs-data
     mkdir /data/property 0700 root root
     mkdir /data/tombstones 0771 system system
 
-    # SA, System SW, SAMSUNG 
+    # SA, System SW, SAMSUNG
     # create log directory
     mkdir /data/log 0775 system log
     chown system log /data/log
@@ -680,7 +681,7 @@ on post-fs-data
     restorecon -R /efs
     restorecon -R /carrier
 # ] SEC_SELINUX_PORTING COMMON
-    
+
     # If there is no fs-post-data action in the init.<device>.rc file, you
     # must uncomment this line, otherwise encrypted filesystems
     # won't work.
@@ -887,7 +888,7 @@ on boot
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
 
     chown system system /sys/class/timed_output/vibrator/enable
-    chown system system /sys/class/timed_output/vibrator/intensity		
+    chown system system /sys/class/timed_output/vibrator/intensity
     chown system system /sys/class/timed_output/vibrator/multi_freq
     chown system system /sys/class/leds/keyboard-backlight/brightness
     chown system system /sys/class/leds/lcd-backlight/brightness
@@ -920,7 +921,7 @@ on boot
     chown system radio /sys/class/sec/sec_touchkey/touchkey_light_update
     chown system radio /sys/class/sec/sec_touchkey/touchkey_light_id_compare
     chown system radio /sys/class/sec/sec_touchkey/touchkey_light_table_write
-	
+
     chmod 0660 /sys/class/sec/sec_epen/input/enabled
     chown system system /sys/class/sec/sec_epen/input/enabled
 
@@ -1418,7 +1419,7 @@ service surfaceflinger /system/bin/surfaceflinger
     onrestart restart zygote
     writepid /dev/cpuset/foreground/tasks
     onrestart restart loc_launcher
-    
+
 service SIDESYNC_service /system/bin/ss_conn_daemon
     class main
     socket ss_conn_daemon stream 0666 system system
@@ -1455,7 +1456,7 @@ service jackservice /system/bin/jackservice
     class main
     user jack
     group audio inet shell
-    
+
 # One shot invocation to deal with encrypted volume.
 service defaultcrypto /system/bin/vdc --wait cryptfs mountdefaultencrypted
     disabled
@@ -1614,27 +1615,27 @@ service eris /system/bin/eris
 # otp
 service otp /system/bin/otp_server
   user system
-  group system 
+  group system
   disabled
 
-on property:persist.security.tlc.otp=1  
+on property:persist.security.tlc.otp=1
   start otp
   setprop persist.security.tlc.otp 0
 
 # ccm
   service ccm /system/bin/tlc_server CCM
   user system
-  group system 
+  group system
   disabled
 
-on property:persist.security.tlc.ccm=1  
+on property:persist.security.tlc.ccm=1
   start ccm
   setprop persist.security.tlc.ccm 0
 
 # dcm
   service dcm /system/bin/tlc_server DCM
   user system
-  group system 
+  group system
   disabled
 
 on property:persist.security.tlc.restartdcm=1
@@ -1642,24 +1643,24 @@ on property:persist.security.tlc.restartdcm=1
   setprop persist.security.tlc.dcm 1
   setprop persist.security.tlc.restartdcm 0
 
-on property:persist.security.tlc.dcm=1  
+on property:persist.security.tlc.dcm=1
   start dcm
   setprop persist.security.tlc.dcm 0
 
 # esecomm
   service esecomm /system/bin/tlc_server ESECOMM
   user system
-  group system 
+  group system
   disabled
 
-on property:persist.security.tlc.esecomm=1  
+on property:persist.security.tlc.esecomm=1
   start esecomm
   setprop persist.security.tlc.esecomm 0
 
 on property:selinux.sec.restorecon=1
     restorecon_msc -RF /data
     chown system system_access /data/security/aasa
-    chmod 2750 /data/security/aasa   
+    chmod 2750 /data/security/aasa
 
 on property:sys.boot_completed=1
     write /sys/block/mmcblk0/queue/scheduler cfq
