@@ -33,7 +33,7 @@ if [ ! -f $KERNELDIR/.config ]; then
     echo
     echo "${bldcya}***** Writing Config *****${txtrst}";
     cp $KERNELDIR/arch/arm64/configs/$VARIANT/$KERNEL_CONFIG .config;
-    make ARCH=arm64 $KERNEL_CONFIG;
+#    make ARCH=arm64 $KERNEL_CONFIG;
 fi;
 
 . $KERNELDIR/.config
@@ -107,10 +107,10 @@ if [ -e $KERNELDIR/arch/arm64/boot/Image ]; then
     echo
     echo "${bldcya}***** Final Touch for Kernel *****${txtrst}"
     stat $KERNELDIR/arch/arm64/boot/Image || exit 1;
-    mv ./arch/arm64/boot/Image ./$BK/$TARGET
+    mv ./arch/arm64/boot/Image ./$BK/$TARGET/
     echo
-    echo "--- Creating custom dt.img ---"
-    ./utilities/dtbtool -o dt.img -s 2048 -p ./scripts/dtc/dtc ./arch/arm64/boot/dts/
+#    echo "--- Creating custom dt.img ---"
+#    ./utilities/dtbtool -o dt.img -s 2048 -p ./scripts/dtc/dtc ./arch/arm64/boot/dts/
 else
     echo "${bldred}Kernel STUCK in BUILD!${txtrst}"
     exit 0;
@@ -179,11 +179,11 @@ echo "Done"
 echo
 echo "${bldcya}***** Make archives *****${txtrst}"
 
-cp ./$TARGET/boot.img ${KERNELDIR}/output/$TARGET
+cp ./$TARGET/boot.img ${KERNELDIR}/output/$TARGET/
 cp -R ./META-INF ${KERNELDIR}/output/$TARGET/
 
-cd ${KERNELDIR}/output/$TARGET
-GETVER=`grep 'S6_MM_*v' ${KERNELDIR}/.config | sed 's/.*".//g' | sed 's/-S.*//g'`
+cd ${KERNELDIR}/output/$TARGET/
+GETVER=`grep 'Noble-Kernel' ${KERNELDIR}/.config | cut -d- -f 3
 
 
 zip -r Noble-Kernel-$TARGET-${GETVER}.zip .
