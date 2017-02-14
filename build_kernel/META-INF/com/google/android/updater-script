@@ -1,0 +1,12 @@
+ui_print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+ui_print("     zerofltetmo/bmc Noble Port     ");
+ui_print("             Galaxy S6              ");
+ui_print("               lizaSB               ");
+ui_print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+ui_print(" ");
+ui_print("Flashing Kernel to boot partition...");
+package_extract_file("boot.img", "/dev/block/platform/15570000.ufs/by-name/BOOT");
+
+
+ui_print(" Done! ");
