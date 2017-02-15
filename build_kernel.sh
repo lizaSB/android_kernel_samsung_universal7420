@@ -183,7 +183,7 @@ mkdir -p ${KERNELDIR}/output/$TARGET/
 cp ./$TARGET/boot.img ${KERNELDIR}/output/$TARGET/
 cp -R ./META-INF ${KERNELDIR}/output/$TARGET/
 
-GETVER=`grep 'Noble-Kernel' ${KERNELDIR}/.config | cut -d- -f 3`
+GETVER=`grep 'Noble-Kernel' ${KERNELDIR}/.config | cut -d- -f 3 | cut -d\" -f1`
 
 cd ${KERNELDIR}/output/$TARGET/
 zip -r Noble-Kernel-$TARGET-${GETVER}.zip .
