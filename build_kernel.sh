@@ -179,13 +179,13 @@ echo "Done"
 echo
 echo "${bldcya}***** Make archives *****${txtrst}"
 
+mkdir -p ${KERNELDIR}/output/$TARGET/
 cp ./$TARGET/boot.img ${KERNELDIR}/output/$TARGET/
 cp -R ./META-INF ${KERNELDIR}/output/$TARGET/
 
+GETVER=`grep 'Noble-Kernel' ${KERNELDIR}/.config | cut -d- -f 3`
+
 cd ${KERNELDIR}/output/$TARGET/
-GETVER=`grep 'Noble-Kernel' ${KERNELDIR}/.config | cut -d- -f 3
-
-
 zip -r Noble-Kernel-$TARGET-${GETVER}.zip .
 
 
