@@ -3,6 +3,7 @@ dtb-$(CONFIG_ARCH_VEXPRESS) += rtsm_ve-aemv8a.dtb foundation-v8.dtb \
 dtb-$(CONFIG_ARCH_VEXPRESS) += juno.dtb
 dtb-$(CONFIG_ARCH_XGENE) += apm-mustang.dtb
 dtb-$(CONFIG_MACH_ESPRESSO7420) += exynos7420-espresso7420.dtb exynos7420-universal7420-ufs.dtb
+dtb-$(CONFIG_MACH_UNIVERSAL7420) += exynos7420-zeroflte_usa_05.dtb
 
 dtb-$(CONFIG_MACH_UNIVERSAL5433) += exynos5433-universal5433_rev02.dtb exynos5433-universal5433.dtb
 dtb-$(CONFIG_MACH_SMDK7580) += exynos7580-smdk7580.dtb
