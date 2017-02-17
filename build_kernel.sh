@@ -103,14 +103,16 @@ else
     make -j10 Image ARCH=arm64
 fi;
 
+    make dtbs
+
 if [ -e $KERNELDIR/arch/arm64/boot/Image ]; then
     echo
     echo "${bldcya}***** Final Touch for Kernel *****${txtrst}"
     stat $KERNELDIR/arch/arm64/boot/Image || exit 1;
     mv ./arch/arm64/boot/Image ./$BK/$TARGET/
     echo
-#    echo "--- Creating custom dt.img ---"
-#    ./utilities/dtbtool -o dt.img -s 2048 -p ./scripts/dtc/dtc ./arch/arm64/boot/dts/
+    echo "--- Creating custom dt.img ---"
+    ./scripts/dtbTool/dtbTool -o dt.img -s 2048 -d ./arch/arm64/boot/dts/
 else
     echo "${bldred}Kernel STUCK in BUILD!${txtrst}"
     exit 0;
