@@ -315,26 +315,6 @@ unsigned char dmb_drv_scan_ch(unsigned long frequency)
 	return TDMB_SUCCESS;
 }
 
-int dmb_drv_byte_write(u16 addr, u8 data)
-{
-	return bbm_com_byte_write(NULL, addr, data);
-}
-
-int dmb_drv_byte_read(u16 addr, u8* data)
-{
-	return bbm_com_byte_read(NULL, addr, data);
-}
-
-int dmb_drv_word_write(u16 addr, u16 data)
-{
-	return bbm_com_word_write(NULL, addr, data);
-}
-
-int dmb_drv_word_read(u16 addr, u16* data)
-{
-	return bbm_com_word_read(NULL, addr, data);
-}
-
 int dmb_drv_get_dmb_sub_ch_cnt()
 {
 	int i, n;
@@ -347,8 +327,7 @@ int dmb_drv_get_dmb_sub_ch_cnt()
 		struct service_info_t *svc_info;
 		svc_info = fic_decoder_get_service_info_list(i);
 
-		if ((svc_info->ca_flag && ((svc_info->flag & 0x0f) == 0x0f))
-			|| (!svc_info->ca_flag && ((svc_info->flag & 0x07) == 0x07))) {
+		if ((svc_info->flag & 0x07) == 0x07) {
 			if ((svc_info->tmid == 0x01)
 				&& (svc_info->dscty == 0x18))
 				n++;
@@ -370,8 +349,7 @@ int dmb_drv_get_dab_sub_ch_cnt()
 		struct service_info_t *svc_info;
 		svc_info = fic_decoder_get_service_info_list(i);
 
-		if ((svc_info->ca_flag && ((svc_info->flag & 0x0f) == 0x0f))
-			|| (!svc_info->ca_flag && ((svc_info->flag & 0x07) == 0x07))) {
+		if ((svc_info->flag & 0x07) == 0x07) {
 			if ((svc_info->tmid == 0x00)
 				&& (svc_info->ascty == 0x00))
 				n++;
@@ -393,8 +371,7 @@ int dmb_drv_get_dat_sub_ch_cnt(void)
 		struct service_info_t *svc_info;
 		svc_info = fic_decoder_get_service_info_list(i);
 
-		if ((svc_info->ca_flag && ((svc_info->flag & 0x0f) == 0x0f))
-			|| (!svc_info->ca_flag && ((svc_info->flag & 0x07) == 0x07))) {
+		if ((svc_info->flag & 0x07) == 0x07) {
 			if (svc_info->tmid == 0x03)
 				n++;
 		}
@@ -432,8 +409,7 @@ char *dmb_drv_get_sub_ch_dmb_label(int subchannel_count)
 		struct service_info_t *svc_info;
 		svc_info = fic_decoder_get_service_info_list(i);
 
-		if ((svc_info->ca_flag && ((svc_info->flag & 0x0f) == 0x0f))
-			|| (!svc_info->ca_flag && ((svc_info->flag & 0x07) == 0x07))) {
+		if ((svc_info->flag & 0x07) == 0x07) {
 			if ((svc_info->tmid == 0x01)
 				&& (svc_info->dscty == 0x18)) {
 				if (n == subchannel_count) {
@@ -461,8 +437,7 @@ char *dmb_drv_get_sub_ch_dab_label(int subchannel_count)
 		struct service_info_t *svc_info;
 		svc_info = fic_decoder_get_service_info_list(i);
 
-		if ((svc_info->ca_flag && ((svc_info->flag & 0x0f) == 0x0f))
-			|| (!svc_info->ca_flag && ((svc_info->flag & 0x07) == 0x07))) {
+		if ((svc_info->flag & 0x07) == 0x07) {
 			if ((svc_info->tmid == 0x00)
 				&& (svc_info->ascty == 0x00)) {
 				if (n == subchannel_count) {
@@ -490,8 +465,7 @@ char *dmb_drv_get_sub_ch_dat_label(int subchannel_count)
 		struct service_info_t *svc_info;
 		svc_info = fic_decoder_get_service_info_list(i);
 
-		if ((svc_info->ca_flag && ((svc_info->flag & 0x0f) == 0x0f))
-			|| (!svc_info->ca_flag && ((svc_info->flag & 0x07) == 0x07))) {
+		if ((svc_info->flag & 0x07) == 0x07) {
 			if (svc_info->tmid == 0x03) {
 				if (n == subchannel_count) {
 					label = (char *) svc_info->label;
@@ -521,8 +495,7 @@ struct sub_channel_info_type *dmb_drv_get_fic_dmb(int subchannel_count)
 	for (i = 0; i < MAX_SVC_NUM; i++) {
 		svc_info = fic_decoder_get_service_info_list(i);
 
-		if ((svc_info->ca_flag && ((svc_info->flag & 0x0f) == 0x0f))
-			|| (!svc_info->ca_flag && ((svc_info->flag & 0x07) == 0x07))) {
+		if ((svc_info->flag & 0x07) == 0x07) {
 			if ((svc_info->tmid == 0x01)
 				&& (svc_info->dscty == 0x18)) {
 				if (n == subchannel_count) {
@@ -538,8 +511,7 @@ struct sub_channel_info_type *dmb_drv_get_fic_dmb(int subchannel_count)
 						= svc_info->sid;
 					dmb_subchannel_info.scids
 						= svc_info->scids;
-					dmb_subchannel_info.ucCAFlag
-						= svc_info->ca_flag;
+
 					num_of_user_appl =
 						svc_info->num_of_user_appl;
 					dmb_subchannel_info.num_of_user_appl
@@ -559,10 +531,7 @@ struct sub_channel_info_type *dmb_drv_get_fic_dmb(int subchannel_count)
 						, dmb_subchannel_info.
 						user_appl_length[j]);
 					}
-					dmb_subchannel_info.ca_sys_id
-						= svc_info->ca_sys_id;
-					memcpy(&dmb_subchannel_info.ca_int_char[0]
-						, &svc_info->ca_int_char[0], 24);
+
 					esb = fic_decoder_get_ensemble_info(0);
 					if (esb->flag == 99)
 						dmb_subchannel_info.uiEnsembleID
@@ -597,8 +566,7 @@ struct sub_channel_info_type *dmb_drv_get_fic_dab(int subchannel_count)
 	for (i = 0; i < MAX_SVC_NUM; i++) {
 		svc_info = fic_decoder_get_service_info_list(i);
 
-		if ((svc_info->ca_flag && ((svc_info->flag & 0x0f) == 0x0f))
-			|| (!svc_info->ca_flag && ((svc_info->flag & 0x07) == 0x07))) {
+		if ((svc_info->flag & 0x07) == 0x07) {
 			if ((svc_info->tmid == 0x00)
 				&& (svc_info->ascty == 0x00)) {
 				if (n == subchannel_count) {
@@ -613,18 +581,13 @@ struct sub_channel_info_type *dmb_drv_get_fic_dab(int subchannel_count)
 						svc_info->sid;
 					dab_subchannel_info.scids =
 						svc_info->scids;
-					dab_subchannel_info.ucCAFlag =
-						svc_info->ca_flag;
-					dab_subchannel_info.ca_sys_id
-						= svc_info->ca_sys_id;
-					memcpy(&dab_subchannel_info.ca_int_char[0]
-						, &svc_info->ca_int_char[0], 24);
+
 					esb = fic_decoder_get_ensemble_info(0);
 					if (esb->flag == 99)
-						dab_subchannel_info.uiEnsembleID
+						dmb_subchannel_info.uiEnsembleID
 						= esb->eid;
 					else
-						dab_subchannel_info.uiEnsembleID
+						dmb_subchannel_info.uiEnsembleID
 						= 0;
 					dab_subchannel_info.ecc	= esb->ecc;
 
@@ -655,8 +618,7 @@ struct sub_channel_info_type *dmb_drv_get_fic_dat(int subchannel_count)
 	for (i = 0; i < MAX_SVC_NUM; i++) {
 		svc_info = fic_decoder_get_service_info_list(i);
 
-		if ((svc_info->ca_flag && ((svc_info->flag & 0x0f) == 0x0f))
-			|| (!svc_info->ca_flag && ((svc_info->flag & 0x07) == 0x07))) {
+		if ((svc_info->flag & 0x07) == 0x07) {
 			if (svc_info->tmid == 0x03) {
 				if (n == subchannel_count) {
 					dat_subchannel_info.ucSubchID =
@@ -671,8 +633,6 @@ struct sub_channel_info_type *dmb_drv_get_fic_dat(int subchannel_count)
 						svc_info->sid;
 					dat_subchannel_info.scids =
 						svc_info->scids;
-					dat_subchannel_info.ucCAFlag
-						= svc_info->ca_flag;
 
 					num_of_user_appl =
 						svc_info->num_of_user_appl;
@@ -693,10 +653,7 @@ struct sub_channel_info_type *dmb_drv_get_fic_dat(int subchannel_count)
 						, dat_subchannel_info.
 						user_appl_length[j]);
 					}
-					dat_subchannel_info.ca_sys_id
-						= svc_info->ca_sys_id;
-					memcpy(&dat_subchannel_info.ca_int_char[0]
-						, &svc_info->ca_int_char[0], 24);
+
 					esb = fic_decoder_get_ensemble_info(0);
 					if (esb->flag == 99)
 						dat_subchannel_info.uiEnsembleID
